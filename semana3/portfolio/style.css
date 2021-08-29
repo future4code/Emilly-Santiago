@@ -1,0 +1,105 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
+
+* {
+  margin: 0;
+  font-family: "Montserrat", sans-serif;
+}
+
+.header {
+  background-color: #7db4b5;
+  height: 80px;
+}
+.header h1 {
+  text-align: center;
+}
+
+.menu {
+  margin: 10px 0;
+}
+
+.menu a {
+  color: black;
+  border: 1px solid black;
+  padding: 5px;
+  margin: 10px;
+}
+
+#selected {
+  color: #e0eff1;
+  border: 2px solid #e0eff1;
+}
+
+a {
+  text-decoration: none;
+}
+
+#profile-picture {
+  height: 300px;
+}
+
+#labenu-logo {
+  height: 100px;
+}
+
+button {
+  background-color: #e0eff1;
+  border: 1px solid black;
+  border-radius: 5px;
+  height: 30px;
+  width: 70px;
+}
+button:hover {
+  background-color: #680148;
+  color: #e0eff1;
+}
+
+form input {
+  display: block;
+  position: relative;
+  left: 410px;
+  width: 300px;
+}
+
+.footer {
+  background-color: #7db4b5;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+}
+
+.footer a {
+  color: #353b45;
+}
+
+#subtitle {
+  color: gray;
+  list-style: none;
+  font-size: small;
+}
+li {
+  list-style: none;
+}
+
+.title {
+  margin-top: 10px;
+  margin-bottom: 5px;
+  color: #680148;
+}
+
+.main {
+  text-align: center;
+  position: absolute;
+
+  right: 200px;
+  left: 200px;
+}
+
+.list-project {
+  margin-bottom: 10px;
+}
+
+#message {
+  height: 200px;
+  margin-bottom: 10px;
+}
