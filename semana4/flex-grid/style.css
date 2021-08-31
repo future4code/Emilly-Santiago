@@ -50,22 +50,18 @@ li {
   margin: 10px;
 }
 .card-container {
-  border: 1px solid gray;
+  box-shadow: 2px 2px 5px darkgray;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
-  align-items: stretch;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
 }
 
 .fotoBolo {
   width: 100%;
-  height: fit-content;
 }
 .descricao {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
   margin: 8px;
 }
 
