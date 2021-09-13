@@ -15,25 +15,30 @@ export default class App extends React.Component {
   };
 
   mudarPagina = (e) => {
-    if (this.state.etapa < 3 && this.state.escolaridade) {
-      this.setState({ etapa: this.state.etapa + 1 });
+    if (this.state.escolaridade){
 
-      if (this.state.escolaridade <= 2) {
-        this.setState({ etapa: this.state.etapa + 2 });
-        console.log("etapa: " + this.state.etapa);
-        console.log("escolaridade: " + this.state.escolaridade);
+      if (this.state.etapa < 3 ) {
+        this.setState({ etapa: this.state.etapa + 1 });
+  
+        if (this.state.escolaridade <= 2) {
+          this.setState({ etapa: this.state.etapa + 2 });
+          console.log("etapa: " + this.state.etapa);
+          console.log("escolaridade: " + this.state.escolaridade);
+        }
+      } else {
+        this.setState({ etapa: 0 });
       }
     } else {
-      this.setState({ etapa: 0 });
+      alert("Selecione ao menos uma escolaridade")
     }
 
-    e.preventDefault();
-    alert(
-      "ID do estado: " +
-        this.state.escolaridade +
-        "ID da etapa: " +
-        this.state.etapa
-    );
+    // e.preventDefault();
+    // alert(
+    //   "ID do estado: " +
+    //     this.state.escolaridade +
+    //     "ID da etapa: " +
+    //     this.state.etapa
+    // );
   };
 
   renderizaPagina = () => {
@@ -55,7 +60,8 @@ export default class App extends React.Component {
         {this.renderizaPagina()}
         {this.state.etapa === 1 && (
           <>
-            <label> 4. Qual a sua escolaridade </label>
+            <br></br>
+            <label> 4. Qual a sua escolaridade * </label>
             <select
               name="escolaridade"
               value={this.state.escolaridade}
@@ -67,13 +73,15 @@ export default class App extends React.Component {
               <option value="3">Ensino superior incompleto</option>
               <option value="4">Ensino superior completo</option>
             </select>
+            <br></br>
           </>
         )}
 
         {this.state.etapa ? (
-          <div>
+          <Container>
             <button onClick={this.mudarPagina}>Próxima Etapa</button>
-          </div>
+            <p>* Campos obrigatórios</p>
+          </Container>
         ) : (
           <p>Muito obrigado por participar! Entraremos em contato!</p>
         )}
@@ -95,3 +103,11 @@ const MainContainer = styled.div`
   align-items: center;
   justify-content: space-between;
 `;
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  
+
+  `
