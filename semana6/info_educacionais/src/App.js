@@ -7,19 +7,36 @@ import styled from "styled-components";
 export default class App extends React.Component {
   state = {
     etapa: 1,
+    escolaridade: 0,
   };
 
-  mudarPagina = () => {
-    if (this.state.etapa < 3) {
+  mudaEscolaridade = (event) => {
+    this.setState({ escolaridade: event.target.value });
+  };
+
+  mudarPagina = (e) => {
+    if (this.state.etapa < 3 && this.state.escolaridade) {
       this.setState({ etapa: this.state.etapa + 1 });
-      console.log(this.state.etapa);
+
+      if (this.state.escolaridade <= 2) {
+        this.setState({ etapa: this.state.etapa + 2 });
+        console.log("etapa: " + this.state.etapa);
+        console.log("escolaridade: " + this.state.escolaridade);
+      }
     } else {
       this.setState({ etapa: 0 });
-      console.log(this.state.etapa);
     }
+
+    e.preventDefault();
+    alert(
+      "ID do estado: " +
+        this.state.escolaridade +
+        "ID da etapa: " +
+        this.state.etapa
+    );
   };
 
-  renderizaPaguina = () => {
+  renderizaPagina = () => {
     switch (this.state.etapa) {
       case 1:
         return <Etapa1 />;
@@ -35,11 +52,28 @@ export default class App extends React.Component {
   render() {
     return (
       <MainContainer>
-        
-        {this.renderizaPaguina()}
+        {this.renderizaPagina()}
+        {this.state.etapa === 1 && (
+          <>
+            <label> 4. Qual a sua escolaridade </label>
+            <select
+              name="escolaridade"
+              value={this.state.escolaridade}
+              onChange={this.mudaEscolaridade}
+            >
+              <option value="0"></option>
+              <option value="1">Ensino médio incompleto</option>
+              <option value="2">Ensino médio completo</option>
+              <option value="3">Ensino superior incompleto</option>
+              <option value="4">Ensino superior completo</option>
+            </select>
+          </>
+        )}
+
         {this.state.etapa ? (
-          <div><button onClick={this.mudarPagina}>Próxima Etapa</button></div>
-          
+          <div>
+            <button onClick={this.mudarPagina}>Próxima Etapa</button>
+          </div>
         ) : (
           <p>Muito obrigado por participar! Entraremos em contato!</p>
         )}
@@ -49,13 +83,15 @@ export default class App extends React.Component {
 }
 
 const MainContainer = styled.div`
+  text-align: start;
+  background-color: pink;
+  height: 250px;
+  width: 900px;
+  margin: auto;
+  padding: 5%;
 
-text-align: center;
-background-color: pink;
-height: 250px;
-
-display: flex;
-flex-direction: column;
-justify-content: space-between;
-
-`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+`;
