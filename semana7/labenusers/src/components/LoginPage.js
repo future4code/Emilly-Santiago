@@ -1,13 +1,13 @@
 import React from "react";
 import styled from "styled-components";
-import axios from "axios"
+import axios from "axios";
+import {ButtonSubmit} from "../App"
 
 const headers = {
   headers: {
     Authorization: "emilly-santiago-maryam",
   },
 };
-
 
 export default class LoginPage extends React.Component {
   state = {
@@ -30,41 +30,61 @@ export default class LoginPage extends React.Component {
       name: this.state.name,
       email: this.state.email,
     };
-    axios.post(url, bory, headers)
-    .then((res) => {
-      console.log(res)
-      this.setState({name: "", email: ""})
-    })
-    .catch((err) => {
-      console.log(err.response.data.message)
-    });
+    axios
+      .post(url, bory, headers)
+      .then((res) => {
+        alert("User successfully created");
+        this.setState({ name: "", email: "" });
+      })
+      .catch((err) => {
+        alert(`ERROR! ${err.response.data.message}`);
+        console.log(err.response.data)
+      });
   };
 
   render() {
     return (
       <div>
-        <div>
+        <InputContainer>
           <label htmlFor="name">Name: </label>
-          <input
+          <Input
             name="name"
             type="text"
             value={this.state.name}
             onChange={this.controlInputName}
-          ></input>
-        </div>
-        <div>
+          ></Input>
+        </InputContainer>
+        <InputContainer>
           <label htmlFor="email">Email: </label>
-          <input
+          <Input
             name="email"
             type="email"
             value={this.state.email}
             onChange={this.controlInputEmail}
-          ></input>
-        </div>
-        <button type="submit" onClick={this.createUser}>
-         Save
-        </button>
+          ></Input>
+        </InputContainer>
+        <ButtonSubmit type="submit" onClick={this.createUser}>
+          Save
+        </ButtonSubmit>
       </div>
     );
   }
 }
+
+const InputContainer = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin: 5px;
+  label {
+    color: #273950;
+  }
+`;
+
+const Input = styled.input`
+  color: #273950;
+  font-size: 12px;
+  padding: 3px;
+  border: double 3px #273950;
+  margin: 8px;
+`;
