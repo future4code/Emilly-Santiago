@@ -1,14 +1,10 @@
-import './App.css';
-
-import TripDetailsPage from './Pages/TripDetailsPage/TripDetailsPage'
-import HomePage from './Pages/HomePage/HomePage';
-import LoginPage from './Pages/LoginPage/LoginPage';
+import "./App.css";
+import React from "react";
+import { Router } from "./route/Router";
 
 function App() {
   return (
-    <div className="App">
-      <LoginPage/>
-    </div>
+    <div><Router/></div>
   );
 }
 
