@@ -1,10 +1,13 @@
-import react from "react";
+import react, { useEffect, useState } from "react";
 import styled from "styled-components";
+import axios from "axios";
 import space from "../../img/space.jpg";
 import { useHistory } from "react-router-dom";
+import { useGetTrips } from "../../hooks/useGetTrips";
 
 function ListTripsPage() {
   const history = useHistory();
+  const [trips, isLoading, error] = useGetTrips();
 
   const goToHomePage = () => {
     history.push("/");
@@ -22,12 +25,28 @@ function ListTripsPage() {
           <Button onClick={goToHomePage}>Voltar</Button>
           <Button onClick={goToAppicationFormPage}>Inscrever</Button>
         </Title>
-        <ContainerTrip>
-          <p>Nome: </p>
-          <p>Descrição: </p>
-          <p>Duração: </p>
-          <p>Data: </p>
-        </ContainerTrip>
+        {!isLoading && trips ? (
+          trips.map((elem) => {
+            return (
+              <ContainerTrip key={elem.id}>
+                <p>
+                  Nome: <span>{elem.name}</span>
+                </p>
+                <p>
+                  Descrição: <span>{elem.description}</span>
+                </p>
+                <p>
+                  Duração: <span>{elem.durationInDays}</span>
+                </p>
+                <p>
+                  Data: <span>{elem.date}</span>
+                </p>
+              </ContainerTrip>
+            );
+          })
+        ) : (
+          <p>{error}</p>
+        )}
       </ContainerRight>
       <ContainerLeft>
         <ContainerImg src={space} />
@@ -63,15 +82,19 @@ const ContainerImg = styled.img`
 `;
 
 const ContainerTrip = styled.div`
-  background-color: #dbd9fa;
+  background-color: #e9e8ff;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  margin: 10px 120px;
+  margin: 15px 120px;
   padding-left: 20px;
-  :hover {
-    background-color: #e9e8ff;
+  p {
+    margin: 6px;
+    font-weight: bold;
+  }
+  span {
+    font-weight: normal;
   }
 `;
 

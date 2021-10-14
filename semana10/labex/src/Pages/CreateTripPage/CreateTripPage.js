@@ -1,13 +1,71 @@
-import react from "react";
+import react, { useState } from "react";
 import styled from "styled-components";
 import LostOnline from "../../img/undraw_Lost_online_re_upmy.svg";
 import { useHistory } from "react-router-dom";
+import axios from "axios";
 
 function CreateTripPage() {
   const history = useHistory();
+  const [tripName, setTripName] = useState("");
+  const [tripPlanet, setTripPlanet] = useState("");
+  const [tripDate, setTripDate] = useState("");
+  const [tripDescription, setTripDescription] = useState("");
+  const [tripDuration, setTripDuration] = useState("");
 
   const goBack = () => {
     history.push("/AdminHomePage");
+  };
+
+  const createTrip = (e) => {
+    e.preventDefault();
+    const bory = {
+      name: tripName,
+      planet: tripPlanet,
+      date: tripDate,
+      description: tripDescription,
+      durationInDays: tripDuration,
+    };
+    const token = localStorage.getItem("token");
+    const header = {
+      headers: {
+        auth: token,
+      },
+    };
+    console.log(bory, token);
+    axios
+      .post(
+        `https://us-central1-labenu-apis.cloudfunctions.net/labeX/emilly-santiago-cruz/trips`,
+        bory,
+        header
+      )
+      .then((reponse) => {
+        //console.log(reponse);
+        alert("Viagem Criada com sucesso");
+      })
+      .catch((error) => {
+        console.log(error);
+        alert("Algo deu errado :(")
+      });
+  };
+
+  const controlInputTripName = (event) => {
+    setTripName(event.target.value);
+  };
+
+  const controlInputTripPlanet = (event) => {
+    setTripPlanet(event.target.value);
+  };
+
+  const controlInputTripDate = (event) => {
+    setTripDate(event.target.value);
+  };
+
+  const controlInputTripDescription = (event) => {
+    setTripDescription(event.target.value);
+  };
+
+  const controlInputTripDuration = (event) => {
+    setTripDuration(event.target.value);
   };
 
   return (
@@ -17,25 +75,49 @@ function CreateTripPage() {
         <ContainerImg src={LostOnline} alt="" />
       </ContainerUpper>
       <ContainerLower>
-        <form>
+        <form onSubmit={createTrip}>
           <p>Criar Viagem </p>
-          <Input type="text" placeholder="nome"></Input>
-          <Select>
-            <option>Mercúrio</option>
-            <option>Vênus</option>
-            <option>Terra</option>
-            <option>Marte</option>
-            <option>Jupter</option>
-            <option>Saturno</option>
-            <option>Neturno</option>
-            <option>Plutão</option>
+          <Input
+            type="text"
+            placeholder="nome"
+            value={tripName}
+            onChange={controlInputTripName}
+            required
+          ></Input>
+          <Select value={tripPlanet} onChange={controlInputTripPlanet} required>
+            <option value="Mercúrio">Mercúrio</option>
+            <option value="Vênus">Vênus</option>
+            <option value="Terra">Terra</option>
+            <option value="Marte">Marte</option>
+            <option value="Jupter">Jupter</option>
+            <option value="Saturno">Saturno</option>
+            <option value="Neturno">Neturno</option>
+            <option value="Plutão">Plutão</option>
           </Select>
-          <Input type="date" placeholder="dd/mm/aaaa"></Input>
-          <Input type="text" placeholder="descrição"></Input>
-          <Input type="number" placeholder="duração em dias"></Input>
+          <Input
+            type="text"
+            placeholder="dd/mm/aaaa"
+            value={tripDate}
+            onChange={controlInputTripDate}
+            required
+          ></Input>
+          <Input
+            type="text"
+            placeholder="descrição"
+            value={tripDescription}
+            onChange={controlInputTripDescription}
+            required
+          ></Input>
+          <Input
+            type="number"
+            placeholder="duração em dias"
+            value={tripDuration}
+            onChange={controlInputTripDuration}
+            required
+          ></Input>
           <div>
             <Button onClick={goBack}>Voltar</Button>
-            <Button>Criar</Button>
+            <ButtonInput type="submit" value="Criar" />
           </div>
         </form>
       </ContainerLower>
@@ -107,6 +189,25 @@ const Select = styled.select`
 `;
 
 const Button = styled.button`
+  background-color: #6c63ff;
+  border: none;
+  color: white;
+  padding: 10px 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 20px;
+  cursor: pointer;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+
+  :hover {
+    background-color: #3c3885;
+  }
+`;
+
+const ButtonInput = styled.input`
   background-color: #6c63ff;
   border: none;
   color: white;

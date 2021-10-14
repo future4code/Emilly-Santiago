@@ -1,25 +1,67 @@
-import react from "react";
+import react, { useState } from "react";
 import styled from "styled-components";
+import axios from "axios";
 import launchDay from "../../img/undraw_launch_day_4e04.svg";
 import { useHistory } from "react-router-dom";
 
 function LoginPage() {
   const history = useHistory();
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
 
   const goBack = () => {
     history.goBack();
   };
 
   const goToAdminHome = () => {
-    history.push("/AdminHomePage");
+    
+    //console.log(email, password);
+    const bory = {
+      email: email,
+      password: password,
+    };
+    axios
+      .post(
+        "https://us-central1-labenu-apis.cloudfunctions.net/labeX/darvas/login",
+        bory
+      )
+      .then((response) => {
+        //console.log("Deu certo", response.data);
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("bory", JSON.stringify(bory));
+        history.push("/AdminHomePage");
+      })
+      .catch((error) => {
+        console.log(error.response);
+        alert("Usuário não autorizado")
+      });
   };
+
+  const onChangeEmail = (event) => {
+    setEmail(event.target.value);
+  };
+
+  const onChangePassword = (event) => {
+    setPassword(event.target.value);
+  };
+
   return (
     <Container>
       <ContainerImg src={launchDay} alt="" />
       <ContainerText>
         <h1>LabeX</h1>
-        <Input placeholder="email" type="email"></Input>
-        <Input placeholder="password" type="password"></Input>
+        <Input
+          placeholder="email"
+          type="email"
+          value={email}
+          onChange={onChangeEmail}
+        ></Input>
+        <Input
+          placeholder="password"
+          type="password"
+          value={password}
+          onChange={onChangePassword}
+        ></Input>
         <div>
           <Button onClick={goBack}>Voltar</Button>
           <Button onClick={goToAdminHome}>Entrar</Button>

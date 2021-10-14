@@ -1,12 +1,15 @@
-import react from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
+import { useGetTrips } from "../../hooks/useGetTrips";
+import axios from "axios";
 
 function AdminHomePage() {
   const history = useHistory();
+  const [trips, isLoading, error] = useGetTrips();
 
   const goToLoginPage = () => {
     history.push("/LoginPage");
+    localStorage.clear();
   };
 
   const goToHomePage = () => {
@@ -17,18 +20,58 @@ function AdminHomePage() {
     history.push("/CreateTripPage");
   };
 
-  const goToTripDetailsPage = () => {
-    history.push("/TripDetailsPage");
+  const goToTripDetailsPage = (id) => {
+    history.push(`/TripDetailsPage/${id}`);
+  };
+
+  const deleteTrip = (id) => {
+    const token = localStorage.getItem("token");
+
+    axios
+      .delete(
+        `https://us-central1-labenu-apis.cloudfunctions.net/labeX/emilly-santiago-cruz/trips/${id}`,
+        {
+          headers: {
+            auth: token,
+          },
+        }
+      )
+      .then((response) => {
+        console.log(response.data.sucess);
+        alert("Viagem deletada");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
   return (
     <Container>
       <ContainerLeft>
-        <h3>Selecione uma viagem ou crie uma nova</h3>
+        <h3>Selecione ou crie suas viagens</h3>
         <Button onClick={goToCreateTripPage}>Criar viagem</Button>
-        <ContainerTrip onClick={goToTripDetailsPage}>
-          <p>Viagem a Saturno</p>
-          <button>Lixeira</button>
-        </ContainerTrip>
+        {!isLoading && trips ? (
+          trips.map((elem) => {
+            return (
+              <ContainerDetails>
+                <ContainerTrip
+                  onClick={() => goToTripDetailsPage(elem.id)}
+                  key={elem.id}
+                >
+                  <p>{elem.name}</p>
+                </ContainerTrip>
+                <ButtonGarbage
+                  onClick={() => {
+                    deleteTrip(elem.id);
+                  }}
+                >
+                  Lixeira
+                </ButtonGarbage>
+              </ContainerDetails>
+            );
+          })
+        ) : (
+          <p>{error}</p>
+        )}
       </ContainerLeft>
       <ContainerRigth>
         <h1>LabeX</h1>
@@ -57,11 +100,13 @@ const Container = styled.div`
 const ContainerLeft = styled.div`
   grid-column: 1/3;
   grid-row: 1/4;
-
   background-color: #c2bfff;
+
   h3 {
     text-align: center;
     margin-top: 40px;
+    font-weight: normal;
+    font-size: 25px;
   }
 
   :nth-child(1) {
@@ -102,15 +147,43 @@ const Button = styled.button`
   }
 `;
 
+const ButtonGarbage = styled.button`
+  background-color: #6c63ff;
+  border: none;
+  color: white;
+  padding: 10px 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+
+  :hover {
+    background-color: #3c3885;
+  }
+`;
+
+
 const ContainerTrip = styled.div`
   background-color: #dbd9fa;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  margin: 10px 80px;
-  padding-left: 20px;
+  padding-left: 10%;
   :hover {
-    background-color: #e9e8ff;
+    color: #3c3885;
+    font-weight: bold;
+    cursor: pointer;
   }
+`;
+
+const ContainerDetails = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin: 10px 120px 10px 120px;
+  justify-content: space-between;
+  background-color: #dbd9fa;
 `;

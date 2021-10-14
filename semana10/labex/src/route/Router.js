@@ -29,7 +29,7 @@ export const Router=()=> {
           <CreateTripPage />
         </Route>
 
-        <Route exact path="/TripDetailsPage">
+        <Route exact path="/TripDetailsPage/:id">
           <TripDetailsPage />
         </Route>
 
@@ -44,5 +44,4 @@ export const Router=()=> {
     </BrowserRouter>
   );
 }
-
 

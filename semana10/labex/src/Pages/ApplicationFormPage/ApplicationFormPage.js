@@ -1,13 +1,65 @@
-import react from "react";
+import react, { useState } from "react";
 import styled from "styled-components";
 import LostOnline from "../../img/undraw_to_the_moon_v1mv.svg";
 import { useHistory } from "react-router-dom";
+import { useGetTrips } from "../../hooks/useGetTrips";
+import axios from "axios";
 
 function ApplicationFormPage() {
   const history = useHistory();
+  const [trips, isLoading, error] = useGetTrips();
+
+  const [tripID, setTripID] = useState("");
+  const [userName, setUserName] = useState("");
+  const [userAge, setUserAge] = useState("");
+  const [userText, setUserText] = useState("");
+  const [userWork, setUserWork] = useState("");
+  const [userCountry, setUserCountry] = useState("");
 
   const goBack = () => {
     history.push("/ListTripsPage");
+  };
+
+  const controlInputTripID = (event) => {
+    setTripID(event.target.value);
+  };
+  const controlInputUserName = (event) => {
+    setUserName(event.target.value);
+  };
+  const controlInputUserAge = (event) => {
+    setUserAge(event.target.value);
+  };
+  const controlInputUserText = (event) => {
+    setUserText(event.target.value);
+  };
+  const controlInputUserWork = (event) => {
+    setUserWork(event.target.value);
+  };
+  const controlInputUserCountry = (event) => {
+    setUserCountry(event.target.value);
+  };
+
+  const ApplyToTrip = (e) => {
+    e.preventDefault();
+    const bory = {
+      name: userName,
+      age: userAge,
+      applicationText: userText,
+      profession: userWork,
+      country: userCountry,
+    };
+    //console.log(bory, tripID);
+    axios
+      .post(
+        `https://us-central1-labenu-apis.cloudfunctions.net/labeX/emilly-santiago-cruz/trips/${tripID}/apply`,
+        bory
+      )
+      .then((response) => {
+        alert(response.data.message);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
@@ -17,21 +69,58 @@ function ApplicationFormPage() {
         <ContainerImg src={LostOnline} alt="" />
       </ContainerUpper>
       <ContainerLower>
-        <form>
+        <form onSubmit={ApplyToTrip}>
           <p>Inscreva-se para uma viagem </p>
-          <Select>
-            <option>Escolha uma viagem</option>
+          <Select value={tripID} onChange={controlInputTripID} required>
+            <option value="">Escolha uma viagem</option>
+            {!isLoading &&
+              trips &&
+              trips.map((elem) => {
+                return (
+                  <option key={elem.id} value={elem.id}>
+                    {elem.name}
+                  </option>
+                );
+              })}
           </Select>
-          <Input type="text" placeholder="nome"></Input>
-          <Input type="number" placeholder="idade"></Input>
-          <Input type="text" placeholder="Texto de Candidatura"></Input>
-          <Input type="text" placeholder="Profissão"></Input>
-          <Select>
-            <option>Escolha um país</option>
-          </Select>
+          <Input
+            type="text"
+            placeholder="nome"
+            value={userName}
+            onChange={controlInputUserName}
+            required
+          ></Input>
+          <Input
+            type="number"
+            placeholder="idade"
+            value={userAge}
+            onChange={controlInputUserAge}
+            required
+          ></Input>
+          <Input
+            type="text"
+            placeholder="Texto de Candidatura"
+            value={userText}
+            onChange={controlInputUserText}
+            required
+          ></Input>
+          <Input
+            type="text"
+            placeholder="Profissão"
+            value={userWork}
+            onChange={controlInputUserWork}
+            required
+          ></Input>
+          <Input
+            type="text"
+            placeholder="Digite o país"
+            value={userCountry}
+            onChange={controlInputUserCountry}
+            required
+          ></Input>
           <div>
             <Button onClick={goBack}>Voltar</Button>
-            <Button>Enviar</Button>
+            <ButtonInput type="submit" value="Enviar" />
           </div>
         </form>
       </ContainerLower>
@@ -103,6 +192,25 @@ const Select = styled.select`
 `;
 
 const Button = styled.button`
+  background-color: #6c63ff;
+  border: none;
+  color: white;
+  padding: 10px 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 20px;
+  cursor: pointer;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+
+  :hover {
+    background-color: #3c3885;
+  }
+`;
+
+const ButtonInput = styled.input`
   background-color: #6c63ff;
   border: none;
   color: white;
