@@ -5,11 +5,11 @@ export const useGetTrips = () => {
   const [trips, setTrips] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
-  
 
   useEffect(() => {
     getTrips();
   }, [trips]);
+
 
   const getTrips = () => {
     const token = localStorage.getItem("token");

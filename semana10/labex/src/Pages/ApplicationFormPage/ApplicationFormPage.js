@@ -3,18 +3,21 @@ import styled from "styled-components";
 import LostOnline from "../../img/undraw_to_the_moon_v1mv.svg";
 import { useHistory } from "react-router-dom";
 import { useGetTrips } from "../../hooks/useGetTrips";
+import useForm from "../../hooks/useForm";
 import axios from "axios";
 
 function ApplicationFormPage() {
   const history = useHistory();
   const [trips, isLoading, error] = useGetTrips();
+  const { form, onChange, cleanFields } = useForm({
+    name: "",
+    age: "",
+    applicationText: "",
+    profession: "",
+    country: "",
+  });
 
   const [tripID, setTripID] = useState("");
-  const [userName, setUserName] = useState("");
-  const [userAge, setUserAge] = useState("");
-  const [userText, setUserText] = useState("");
-  const [userWork, setUserWork] = useState("");
-  const [userCountry, setUserCountry] = useState("");
 
   const goBack = () => {
     history.push("/ListTripsPage");
@@ -23,39 +26,19 @@ function ApplicationFormPage() {
   const controlInputTripID = (event) => {
     setTripID(event.target.value);
   };
-  const controlInputUserName = (event) => {
-    setUserName(event.target.value);
-  };
-  const controlInputUserAge = (event) => {
-    setUserAge(event.target.value);
-  };
-  const controlInputUserText = (event) => {
-    setUserText(event.target.value);
-  };
-  const controlInputUserWork = (event) => {
-    setUserWork(event.target.value);
-  };
-  const controlInputUserCountry = (event) => {
-    setUserCountry(event.target.value);
-  };
 
   const ApplyToTrip = (e) => {
     e.preventDefault();
-    const bory = {
-      name: userName,
-      age: userAge,
-      applicationText: userText,
-      profession: userWork,
-      country: userCountry,
-    };
+
     //console.log(bory, tripID);
     axios
       .post(
         `https://us-central1-labenu-apis.cloudfunctions.net/labeX/emilly-santiago-cruz/trips/${tripID}/apply`,
-        bory
+        form
       )
       .then((response) => {
         alert(response.data.message);
+        cleanFields();
       })
       .catch((error) => {
         console.log(error);
@@ -84,38 +67,43 @@ function ApplicationFormPage() {
               })}
           </Select>
           <Input
+            name={"name"}
             type="text"
             placeholder="nome"
-            value={userName}
-            onChange={controlInputUserName}
+            value={form.name}
+            onChange={onChange}
             required
           ></Input>
           <Input
+            name={"age"}
             type="number"
             placeholder="idade"
-            value={userAge}
-            onChange={controlInputUserAge}
+            value={form.age}
+            onChange={onChange}
             required
           ></Input>
           <Input
+            name={"applicationText"}
             type="text"
             placeholder="Texto de Candidatura"
-            value={userText}
-            onChange={controlInputUserText}
+            value={form.applicationText}
+            onChange={onChange}
             required
           ></Input>
           <Input
+            name={"profession"}
             type="text"
             placeholder="Profissão"
-            value={userWork}
-            onChange={controlInputUserWork}
+            value={form.profession}
+            onChange={onChange}
             required
           ></Input>
           <Input
+            name={"country"}
             type="text"
             placeholder="Digite o país"
-            value={userCountry}
-            onChange={controlInputUserCountry}
+            value={form.country}
+            onChange={onChange}
             required
           ></Input>
           <div>

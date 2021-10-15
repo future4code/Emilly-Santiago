@@ -37,7 +37,7 @@ function AdminHomePage() {
         }
       )
       .then((response) => {
-        console.log(response.data.sucess);
+        //console.log(response.data.sucess);
         alert("Viagem deletada");
       })
       .catch((error) => {

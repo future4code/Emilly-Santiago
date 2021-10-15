@@ -1,16 +1,19 @@
-import react, { useState } from "react";
 import styled from "styled-components";
 import LostOnline from "../../img/undraw_Lost_online_re_upmy.svg";
 import { useHistory } from "react-router-dom";
+import useForm from "../../hooks/useForm";
 import axios from "axios";
 
 function CreateTripPage() {
   const history = useHistory();
-  const [tripName, setTripName] = useState("");
-  const [tripPlanet, setTripPlanet] = useState("");
-  const [tripDate, setTripDate] = useState("");
-  const [tripDescription, setTripDescription] = useState("");
-  const [tripDuration, setTripDuration] = useState("");
+
+  const { form, onChange, cleanFields } = useForm({
+    name: "",
+    planet: "",
+    date: "",
+    description: "",
+    durationInDays: "",
+  });
 
   const goBack = () => {
     history.push("/AdminHomePage");
@@ -18,54 +21,28 @@ function CreateTripPage() {
 
   const createTrip = (e) => {
     e.preventDefault();
-    const bory = {
-      name: tripName,
-      planet: tripPlanet,
-      date: tripDate,
-      description: tripDescription,
-      durationInDays: tripDuration,
-    };
     const token = localStorage.getItem("token");
     const header = {
       headers: {
         auth: token,
       },
     };
-    console.log(bory, token);
+    //console.log(form, token);
     axios
       .post(
         `https://us-central1-labenu-apis.cloudfunctions.net/labeX/emilly-santiago-cruz/trips`,
-        bory,
+        form,
         header
       )
       .then((reponse) => {
         //console.log(reponse);
         alert("Viagem Criada com sucesso");
+        cleanFields();
       })
       .catch((error) => {
         console.log(error);
-        alert("Algo deu errado :(")
+        alert("Algo deu errado :(");
       });
-  };
-
-  const controlInputTripName = (event) => {
-    setTripName(event.target.value);
-  };
-
-  const controlInputTripPlanet = (event) => {
-    setTripPlanet(event.target.value);
-  };
-
-  const controlInputTripDate = (event) => {
-    setTripDate(event.target.value);
-  };
-
-  const controlInputTripDescription = (event) => {
-    setTripDescription(event.target.value);
-  };
-
-  const controlInputTripDuration = (event) => {
-    setTripDuration(event.target.value);
   };
 
   return (
@@ -80,11 +57,17 @@ function CreateTripPage() {
           <Input
             type="text"
             placeholder="nome"
-            value={tripName}
-            onChange={controlInputTripName}
+            name={"name"}
+            value={form.name}
+            onChange={onChange}
             required
           ></Input>
-          <Select value={tripPlanet} onChange={controlInputTripPlanet} required>
+          <Select
+            value={form.planet}
+            name={"planet"}
+            onChange={onChange}
+            required
+          >
             <option value="Mercúrio">Mercúrio</option>
             <option value="Vênus">Vênus</option>
             <option value="Terra">Terra</option>
@@ -97,22 +80,28 @@ function CreateTripPage() {
           <Input
             type="text"
             placeholder="dd/mm/aaaa"
-            value={tripDate}
-            onChange={controlInputTripDate}
+            name={"date"}
+            value={form.date}
+            onChange={onChange}
             required
+            // por algum motivo o pattern não esta com o comportamento esperado
+            // pattern={"^([0-2][0-9]|(3)[0-1])(/)(((0)[0-9])|((1)[0-2]))(/)d{4}$"}
+            // title={"Formato dd/mm/aaaa"}
           ></Input>
           <Input
             type="text"
             placeholder="descrição"
-            value={tripDescription}
-            onChange={controlInputTripDescription}
+            name={"description"}
+            value={form.description}
+            onChange={onChange}
             required
           ></Input>
           <Input
             type="number"
             placeholder="duração em dias"
-            value={tripDuration}
-            onChange={controlInputTripDuration}
+            name={"durationInDays"}
+            value={form.durationInDays}
+            onChange={onChange}
             required
           ></Input>
           <div>
