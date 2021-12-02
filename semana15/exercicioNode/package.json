@@ -1,0 +1,14 @@
+{
+  "name": "exercicionode",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./index.js",
+    "exercicio1": "clear && node exercicio1.js",
+    "exercicio2": "clear && node exercicio2.js",
+    "exercicio3": "clear && node exercicio3.js"
+  },
+  "author": "Emilly Santiago",
+  "license": "ISC"
+}
