@@ -1,0 +1,22 @@
+[
+   {
+      "id" :1,
+      "cep":  "50720000",
+      "Logradouro":  "Av. caxangá",
+      "numero": 521,
+      "complemento":  "Ao lado do COMPAZ - Miguel Arraes",
+      "bairro": "Madalena",
+      "cidade": "Recife",
+      "estado": "PE"
+
+
+   },
+   {
+     "cep": "50720000",
+     "Logradouro": "Av. caxangá",
+     "numero": 521,
+     "bairro": "Madalena",
+     "cidade": "Recife",
+     "estado": "PE"
+   }
+]
