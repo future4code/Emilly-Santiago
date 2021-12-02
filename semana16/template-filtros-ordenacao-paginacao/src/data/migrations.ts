@@ -1,6 +1,8 @@
 import { connection } from "./connection";
 import users from "./users.json";
 import products from "./products.json";
+import purchases from "./purchases.json";
+
 
 const printError = (error: any) => {
   console.log(error.sqlMessage || error.message);
@@ -10,7 +12,6 @@ const createTables = () =>
   connection
     .raw(
       `
-
       CREATE TABLE IF NOT EXISTS labecommerce_users (
          id VARCHAR(255) PRIMARY KEY,
          name VARCHAR(255) UNIQUE NOT NULL,
@@ -20,12 +21,20 @@ const createTables = () =>
 
       CREATE TABLE IF NOT EXISTS labecommerce_products (
          id VARCHAR(255) PRIMARY KEY,
-         name VARCHAR(255) NOT NULL,
+         name VARCHAR(255) UNIQUE NOT NULL,
          image_url TEXT(1023),
-         user_id VARCHAR(255),
-         price BIGINT,
-         FOREIGN KEY(user_id) REFERENCES labecommerce_users(id) 
+         price FLOAT,
       );
+      
+      CREATE TABLE IF NOT EXISTS labecommerce_purchases (
+        id VARCHAR(255) PRIMARY KEY,
+        user_id VARCHAR(255)
+        quantity INT,
+        product_id VARCHAR(255)
+        total_price FLOAT,
+        FOREIGN KEY(user_id) REFERENCES labecommerce_users(id)
+        FOREIGN KEY(product_id) REFERENCES labecommerce_products(id)
+      )
 
 `
     )
@@ -46,7 +55,15 @@ const insertProducts = () =>
   connection("labecommerce_products")
     .insert(products)
     .then(() => {
-      console.log("Receitas criadas");
+      console.log("Produtos criados");
+    })
+    .catch(printError);
+
+const insertPurchases = () =>
+  connection("labecommerce_purchases")
+    .insert(purchases)
+    .then(() => {
+      console.log("Compras criadas");
     })
     .catch(printError);
 

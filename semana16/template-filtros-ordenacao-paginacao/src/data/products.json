@@ -1,9 +1,8 @@
 [
-	{
+  {
     "id": "1",
     "name": "Notebook",
     "image_url": "https://i.picsum.photos/id/0/5616/3744.jpg?hmac=3GAAioiQziMGEtLbfrdbcoenXoWAW-zlyEAMkfEdBzQ",
-    "user_id": "c4eaac6c-584a-40d8-be06-3e2389ddbeda",
-    "price": 1598404461000
+    "price": 5000
   }
 ]

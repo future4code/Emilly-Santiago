@@ -4,6 +4,7 @@ import { AddressInfo } from "net"
 import { createUser } from "./endpoints/createUser"
 import { getAllUsers } from "./endpoints/getAllUsers";
 import { getAllProducts } from "./endpoints/getAllProducts";
+import { createProduct } from "./endpoints/createProduct";
 
 
 export const app = express()
@@ -12,11 +13,10 @@ app.use(express.json())
 app.use(cors())
 
 app.get("/users", getAllUsers)
-
-// ta dando erro no cadastro
 app.post("/users", createUser);
 
 app.get("/products", getAllProducts);
+app.post("/products", createProduct);
 
 
 const server = app.listen(process.env.PORT || 3003, () => {
