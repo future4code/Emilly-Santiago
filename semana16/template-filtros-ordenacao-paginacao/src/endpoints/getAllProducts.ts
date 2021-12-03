@@ -1,8 +1,11 @@
 import { Request, Response } from "express";
 import { connection } from "../data/connection";
-import { product } from "../types";
+import { Product } from "../types";
 
-export async function getAllProducts(req: Request, res: Response): Promise<void> {
+export async function getAllProducts(
+  req: Request,
+  res: Response
+): Promise<void> {
   try {
     const result = await connection("labecommerce_products");
 
@@ -14,12 +17,11 @@ export async function getAllProducts(req: Request, res: Response): Promise<void>
   }
 }
 
-const toProducts = (input: any): product => {
+const toProducts = (input: any): Product => {
   return {
     id: input.id,
     name: input.name,
     image_url: input.image_url,
-    user_Id: input.user_Id,
-    price: input.price
+    price: input.price,
   };
 };

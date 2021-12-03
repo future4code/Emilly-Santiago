@@ -5,6 +5,7 @@ import { createUser } from "./endpoints/createUser"
 import { getAllUsers } from "./endpoints/getAllUsers";
 import { getAllProducts } from "./endpoints/getAllProducts";
 import { createProduct } from "./endpoints/createProduct";
+import { createPurchase } from "./endpoints/createPurchase";
 
 
 export const app = express()
@@ -17,6 +18,8 @@ app.post("/users", createUser);
 
 app.get("/products", getAllProducts);
 app.post("/products", createProduct);
+
+app.post("/purchases", createPurchase);
 
 
 const server = app.listen(process.env.PORT || 3003, () => {

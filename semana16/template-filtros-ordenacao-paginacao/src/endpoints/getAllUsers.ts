@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { connection } from "../data/connection";
-import { user } from "../types";
+import { User } from "../types";
 
 export async function getAllUsers(req: Request, res: Response): Promise<void> {
   try {
@@ -14,7 +14,7 @@ export async function getAllUsers(req: Request, res: Response): Promise<void> {
   }
 }
 
-const toUser = (input: any): user => {
+const toUser = (input: any): User => {
   return {
     id: input.id,
     name: input.name,
