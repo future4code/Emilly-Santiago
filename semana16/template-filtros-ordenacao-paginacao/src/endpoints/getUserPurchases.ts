@@ -38,7 +38,7 @@ export const getUserPurchases = async (req: Request, res: Response) => {
       .where({ user_id });
 
     res.status(200).send({ purchases });
-  } catch (error: any) {
-    res.status(400).send({ message: error.message });
+  } catch (error) {
+    res.status(400).send({ message: error });
   }
 };
