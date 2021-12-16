@@ -1,26 +1,16 @@
-import { compareSync, genSaltSync, hashSync } from "bcryptjs"
+import { compareSync, genSaltSync, hashSync } from "bcryptjs";
 
 export class HashManager {
+  public async createHash(plainText: string): Promise<string> {
 
-  createHash = (
-    plainText: string
-  ): string => {
+    const rounds = Number(process.env.BCRYPT_COST)
+    const salt: string = genSaltSync(rounds);
+    const cypherText: string = hashSync(plainText, salt);
 
-    const cost: number = 12  // parâmetro que define o tempo para execução do algoritmo
-    const salt:string = genSaltSync(cost) 
-    // string aleatória (exemplo: "$2a$12$fur84HHofir95ujhnb.loi") 
-    // para gerar hashs diferentes mesmo quando as senhas são iguais
-    const cypherText:string = hashSync(plainText, salt)
-
-    // console.log({salt, cypherText});
-    
-    return cypherText
+    return cypherText;
   }
 
-  compareHash = (
-    plainText:string,
-    cypherText:string
-  ):boolean =>{
-    return compareSync(plainText, cypherText)
-  }
+  public async compareHash(plainText: string, cypherText: string): Promise<boolean> {
+    return compareSync(plainText, cypherText);
+  };
 }
