@@ -7,7 +7,8 @@
     "dev": "ts-node-dev ./src/index.ts",
     "start": "tsc && node ./build/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "migrations": "tsnd ./src/data/migrations.ts"
+    "migration_Recipes": "tsnd ./src/data/migrationRecipes.ts",
+    "migration_Users": "tsnd ./src/data/migrationUsers.ts"
   },
   "keywords": [],
   "author": "",

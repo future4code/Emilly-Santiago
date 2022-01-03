@@ -6,8 +6,8 @@ const printError = (error: any) => {
   console.log(error.sqlMessage || error.message);
 };
 
-export class createTables extends DataBase {
-  public async createUser(): Promise<any> {
+export class CreateTables extends DataBase {
+  public async createTableUsers(): Promise<any> {
     await DataBase.connection
       .raw(
         `
@@ -17,25 +17,15 @@ export class createTables extends DataBase {
         email VARCHAR(64) NOT NULL,
         password VARCHAR(255) NOT NULL
      );
-  
-     CREATE TABLE IF NOT EXISTS cookenu_recipes (
-        id VARCHAR(64) PRIMARY KEY,
-        title VARCHAR(64) NOT NULL,
-        description VARCHAR(1024),
-        createAt DATE,
-        author_id VARCHAR(64) DEFAULT "No user provided",
-        FOREIGN KEY (author_id) REFERENCES cookenu_users(id)
-     );
-  
      CREATE TABLE IF NOT EXISTS cookenu_relationalUser (
         id VARCHAR(64) PRIMARY KEY,
-        user_id VARCHAR(64) NOT NULL,
-        FOREIGN KEY (user_id) REFERENCES cookenu_users(id)
+        userId VARCHAR(64) NOT NULL,
+        FOREIGN KEY (userId) REFERENCES cookenu_users(id)
      );
   `
       )
       .then(() => {
-        console.log("Tabelas criadas!");
+        console.log("Tabelas de usuários criadas!");
       })
       .catch((error: any) => {
         console.log(printError);
@@ -52,22 +42,10 @@ const insertUsers = () => {
     .catch(printError);
 };
 
-const insertRecipes = () => {
-  DataBase.connection("cookenu_recipes")
-    .insert(recipes)
-    .then(() => {
-      console.log("Receitas criadas");
-    })
-    .catch(printError);
-};
-
 const closeConnection = () => {
   DataBase.connection.destroy();
 };
 
-const createtable = new createTables();
-createtable
-  .createUser()
-  .then(insertUsers)
-  .then(insertRecipes)
-  .finally(closeConnection);
+const createTableUsers = new CreateTables();
+createTableUsers.createTableUsers().then(insertUsers).finally(closeConnection);
+

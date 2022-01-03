@@ -31,8 +31,8 @@ export async function createRecipe(req: Request, res: Response) {
     const IdGenerator = new IdGenerated();
     const id = IdGenerator.generatedId();
     const creatAt = new Date()
-    const author_id = tokenData.id;
-    const NewRecipe = new Recipe(id, title, description, creatAt, author_id);
+    const authorId = tokenData.id;
+    const NewRecipe = new Recipe(id, title, description, creatAt, authorId);
     
     const recipeDataBase = new RecipeDataBase()
     await recipeDataBase.createRecipe(NewRecipe);

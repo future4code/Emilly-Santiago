@@ -9,7 +9,7 @@ export class RecipeDataBase extends DataBase {
         title: recipe.getTitle(),
         description: recipe.getDescription(),
         createAt: recipe.getCreateAt(),
-        author_id: recipe.getAuthor_id(),
+        authorId: recipe.getAuthorId(),
       });
     } catch (error) {
       throw new Error(error.sqlMessage || error.Message);
@@ -28,11 +28,11 @@ export class RecipeDataBase extends DataBase {
     }
   }
 
-  public async findRecipesByAuthor(author_id: string): Promise<Recipe> {
+  public async findRecipesByAuthor(authorId: string): Promise<Recipe> {
     try {
       const recipes = await DataBase.connection("cookenu_recipes")
         .select("*")
-        .where({ author_id: author_id });
+        .where({ authorId: authorId });
 
       return recipes[0] && Recipe.toRecipeModel(recipes[0]);
     } catch (error) {

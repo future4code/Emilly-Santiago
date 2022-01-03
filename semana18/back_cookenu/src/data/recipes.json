@@ -4,27 +4,27 @@
     "title": "Bolo de chocolate",
     "description": "Bolo de chocolate é um bolo simples ou confeitado, que leva chocolate derretido ou em pó, ou ainda cacau em pó em sua confecção. Os ingredientes mais comuns são o ovo, o leite, a manteiga ou substituto, açúcar e fermento.",
     "createAt": "2020-10-20",
-    "author_id": "0a4147ad-30dd-4547-9e35-94e655d02f13"
+    "authorId": "0a4147ad-30dd-4547-9e35-94e655d02f13"
   },
   {
     "id": "2",
     "title": "Homus (pasta de grão-de-bico)",
     "description": "No processador ou liquidificador, bata o grão-de-bico aos poucos até triturar bem (use a água do cozimento para facilitar). Junte os demais ingredientes e bata até virar uma pasta homogênea. Sirva em seguida ou gelado, acompanhado, se desejar, de pão árabe (pita).",
-    "data_nasc": "2021-01-10",
-    "author_id": "4d3bc362-f838-43d6-9e06-5f3883873f74"
+    "createAt": "2021-01-10",
+    "authorId": "c4eaac6c-584a-40d8-be06-3e2389ddbeda"
   },
   {
     "id": "3",
     "title": "Nhoque ao sugo",
     "description": "Leve ao fogo uma panela grande com água e sal para ferver. Em um recipiente, misture bem a batata em flocos com a água morna. Junte a farinha e os demais ingredientes. Coloque a mistura no saco de confeitar e modele os nhoques na água fervente. Coloque a mistura no saco de confeitar e modele os nhoques na água fervente.",
     "createAt": "2020-12-26",
-    "author_id": "5a7e728a-3afa-47d6-850d-0fba7786e6a7"
+    "authorId": "0a4147ad-30dd-4547-9e35-94e655d02f13"
   },
   {
     "id": "4",
     "title": "Carpaccio",
     "description": "Forre um prato com o agrião e cubra com camadas de carne. Forre um prato com o agrião e cubra com camadas de carne. Em um recipiente, misture todos os ingredientes do molho até obter uma mistura homogênea. Regue a carne com o molho, acrescente o queijo cortado em palitos, finalize com as alcaparras e regue o prato com azeite.",
-    "data_nasc": "2021-05-11",
-    "author_id": "4d3bc362-f838-43d6-9e06-5f3883873f74"
+    "createAt": "2021-05-11",
+    "authorId": "c4eaac6c-584a-40d8-be06-3e2389ddbeda"
   }
 ]
